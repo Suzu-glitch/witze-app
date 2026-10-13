@@ -1,0 +1,18 @@
+$color-primary: #04da4b;
+$color-primary-hover: #04c142;
+$color-danger: #f02f2f;
+$color-danger-hover: #ea1111;
+$color-background: #333;
+$color-surface: #444;
+$color-text: #fff;
+
+$font-body: Inter, sans-serif;
+$font-heading: "Rubik Scribble", cursive;
+
+$breakpoint-tablet: 600px;
+
+@mixin tablet-and-up {
+  @media (min-width: $breakpoint-tablet) {
+    @content;
+  }
+}
