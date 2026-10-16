@@ -13,3 +13,11 @@ export function saveJoke(joke) {
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify([joke, ...savedJokes]));
 }
+
+export function removeJoke(joke) {
+  const remainingJokes = getSavedJokes().filter(
+    (savedJoke) => savedJoke !== joke,
+  );
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(remainingJokes));
+}

@@ -1,18 +1,35 @@
 import "./style.scss";
-import { fetchJoke } from "./joke-api.js";
-import { getSavedJokes, saveJoke } from "./joke-storage.js";
+import { fetchJoke, fetchCategories } from "./joke-api.js";
+import { getSavedJokes, saveJoke, removeJoke } from "./joke-storage.js";
+import { getInitialTheme, applyTheme, saveTheme } from "./theme.js";
 
 const jokeTextEl = document.querySelector(".current-joke__text");
+const categorySelectEl = document.querySelector(".current-joke__category");
 const generateButtonEl = document.querySelector(".current-joke__generate");
 const saveButtonEl = document.querySelector(".current-joke__save");
 const savedJokesListEl = document.querySelector(".saved-jokes__list");
+const themeToggleEl = document.querySelector(".theme-toggle");
 
 let currentJoke = "";
+let currentTheme = getInitialTheme();
+
+applyTheme(currentTheme);
 
 async function displayJoke() {
-  currentJoke = await fetchJoke();
+  currentJoke = await fetchJoke(categorySelectEl.value);
   jokeTextEl.textContent = currentJoke;
   saveButtonEl.classList.remove("current-joke__save--disabled");
+}
+
+async function renderCategories() {
+  const categories = await fetchCategories();
+
+  categories.forEach((category) => {
+    const optionEl = document.createElement("option");
+    optionEl.value = category;
+    optionEl.textContent = category;
+    categorySelectEl.appendChild(optionEl);
+  });
 }
 
 function renderSavedJokes() {
@@ -48,6 +65,16 @@ function renderSavedJokes() {
   }
 
   savedJokesListEl.innerHTML = html;
+
+  const removeButtonEls = savedJokesListEl.querySelectorAll(
+    ".saved-joke__remove",
+  );
+
+  removeButtonEls.forEach((removeButtonEl, index) => {
+    removeButtonEl.addEventListener("click", () => {
+      removeSavedJoke(savedJokes[index]);
+    });
+  });
 }
 
 function saveCurrentJoke() {
@@ -55,7 +82,20 @@ function saveCurrentJoke() {
   renderSavedJokes();
 }
 
+function removeSavedJoke(joke) {
+  removeJoke(joke);
+  renderSavedJokes();
+}
+
+function toggleTheme() {
+  currentTheme = currentTheme === "dark" ? "light" : "dark";
+  applyTheme(currentTheme);
+  saveTheme(currentTheme);
+}
+
 generateButtonEl.addEventListener("click", displayJoke);
 saveButtonEl.addEventListener("click", saveCurrentJoke);
+themeToggleEl.addEventListener("click", toggleTheme);
 
 renderSavedJokes();
+renderCategories();

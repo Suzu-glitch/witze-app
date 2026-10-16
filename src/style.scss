@@ -1,5 +1,6 @@
 @use "variables" as *;
 @use "fonts";
+@use "themes";
 
 * {
   margin: 0;
@@ -31,6 +32,45 @@ body {
   font-size: 60px;
 }
 
+.theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem;
+  border: 1px solid $color-primary;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: $color-primary;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: $color-primary;
+    color: #000;
+  }
+
+  &__icon {
+    width: 1.5rem;
+  }
+
+  &__icon--moon {
+    display: none;
+  }
+}
+
+[data-theme="light"] .theme-toggle {
+  &__icon--sun {
+    display: none;
+  }
+
+  &__icon--moon {
+    display: block;
+  }
+}
+
 .current-joke {
   margin-top: 2rem;
   padding: 2rem;
@@ -43,6 +83,23 @@ body {
 
   &__text {
     font-size: 1.2rem;
+  }
+
+  &__filter {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__category {
+    padding: 0.75rem 1rem;
+    border: 1px solid $color-primary;
+    border-radius: 4px;
+    background-color: $color-background;
+    color: $color-text;
+    font-family: inherit;
+    font-size: 1rem;
   }
 
   &__actions {
@@ -90,9 +147,11 @@ body {
       color: #000;
     }
   }
+
   &__save--disabled {
     display: none;
   }
+
   &__save-icon {
     width: 1.5rem;
   }
@@ -139,7 +198,7 @@ body {
     align-items: center;
     justify-content: center;
     background-color: $color-danger;
-    color: $color-text;
+    color: #fff;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 

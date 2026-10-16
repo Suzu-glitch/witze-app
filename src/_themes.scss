@@ -1,0 +1,11 @@
+:root {
+  --color-background: #333;
+  --color-surface: #444;
+  --color-text: #fff;
+}
+
+[data-theme="light"] {
+  --color-background: #f2f2f2;
+  --color-surface: #fff;
+  --color-text: #222;
+}

@@ -2,9 +2,9 @@ $color-primary: #04da4b;
 $color-primary-hover: #04c142;
 $color-danger: #f02f2f;
 $color-danger-hover: #ea1111;
-$color-background: #333;
-$color-surface: #444;
-$color-text: #fff;
+$color-background: var(--color-background);
+$color-surface: var(--color-surface);
+$color-text: var(--color-text);
 
 $font-body: Inter, sans-serif;
 $font-heading: "Rubik Scribble", cursive;
